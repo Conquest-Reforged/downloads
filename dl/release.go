@@ -1,11 +1,11 @@
-package release
+package dl
 
 import (
-	"net/http"
-	"fmt"
 	"encoding/json"
-	"regexp"
+	"fmt"
 	"github.com/pkg/errors"
+	"net/http"
+	"regexp"
 )
 
 type Release struct {
@@ -24,12 +24,12 @@ type Asset struct {
 
 func Latest(owner, repo string) (*Release, error) {
 	var release Release
-	release.Assets = []Asset{}
 	r, e := http.Get(fmt.Sprintf("https://api.github.com/repos/%s/%s/releases/latest", owner, repo))
 	if e != nil {
 		return nil, e
 	}
-	return &release, json.NewDecoder(r.Body).Decode(&release)
+	e = json.NewDecoder(r.Body).Decode(&release)
+	return &release, e
 }
 
 func (r *Release) Asset(matcher regexp.Regexp) (*Asset, error) {
