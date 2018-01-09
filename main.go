@@ -1,11 +1,13 @@
 package main
 
 import (
+	"bufio"
 	"flag"
 	"fmt"
 	"github.com/dags-/downloads/dl"
 	"github.com/qiangxue/fasthttp-routing"
 	"github.com/valyala/fasthttp"
+	"os"
 	"time"
 )
 
@@ -37,5 +39,18 @@ func main() {
 		MaxRequestBodySize: 0,
 	}
 
+	go handleStop()
+
 	panic(server.ListenAndServe(fmt.Sprintf(":%v", *port)))
+}
+
+func handleStop() {
+	scanner := bufio.NewScanner(os.Stdin)
+	for scanner.Scan() {
+		if scanner.Text() == "stop" {
+			fmt.Println("Stopping...")
+			os.Exit(0)
+			break
+		}
+	}
 }
