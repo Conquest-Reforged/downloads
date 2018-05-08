@@ -3,9 +3,10 @@ package dl
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/pkg/errors"
 	"net/http"
 	"regexp"
+
+	"github.com/pkg/errors"
 )
 
 type Release struct {
@@ -28,6 +29,7 @@ func Latest(owner, repo string) (*Release, error) {
 	if e != nil {
 		return nil, e
 	}
+	defer r.Body.Close()
 	e = json.NewDecoder(r.Body).Decode(&release)
 	return &release, e
 }

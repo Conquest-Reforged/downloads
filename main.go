@@ -4,16 +4,16 @@ import (
 	"bufio"
 	"flag"
 	"fmt"
+	"os"
+	"time"
+
 	"github.com/dags-/downloads/dl"
 	"github.com/qiangxue/fasthttp-routing"
 	"github.com/valyala/fasthttp"
-	"os"
-	"time"
 )
 
 func main() {
 	port := flag.Int("port", 8083, "The server port")
-
 	config := dl.LoadConfig()
 	cache := dl.NewCache(config)
 

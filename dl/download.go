@@ -2,11 +2,12 @@ package dl
 
 import (
 	"fmt"
-	"github.com/pkg/errors"
 	"regexp"
 	"strings"
 	"sync"
 	"time"
+
+	"github.com/pkg/errors"
 )
 
 const expireTime = time.Duration(5 * time.Minute)
